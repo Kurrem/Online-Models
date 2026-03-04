@@ -51,11 +51,11 @@
     <button id="menu-btn">☰</button>
 
     <div id="sidebar">
-        <a class="model-link" onclick="loadModel('model-01')">Model 01: Massing</a>
-        <a class="model-link" onclick="loadModel('model-02')">Model 02: Facade Details</a>
+        <a class="model-link" onclick="loadModel('model-01')">Model 01: LogPiece01</a>
+        <a class="model-link" onclick="loadModel('model-02')">Model 02: Also LogPiece01</a>
     </div>
 
-    <model-viewer id="viewer" src="model-01.glb" camera-controls auto-rotate shadow-intensity="1" ar></model-viewer>
+    <model-viewer id="viewer" src="LogPiece01.glb" camera-controls auto-rotate shadow-intensity="1" ar></model-viewer>
 
     <script>
         const sidebar = document.getElementById('sidebar');
@@ -69,8 +69,8 @@
 
         // 2. A dictionary matching your IDs to your actual file names
         const modelFiles = {
-            'model-01': 'model-01.glb',
-            'model-02': 'model-02.glb'
+            'model-01': 'LogPiece01.glb',
+            'model-02': 'LogPiece01.glb'
             // Keep adding to this list as you export new models!
         };
 
