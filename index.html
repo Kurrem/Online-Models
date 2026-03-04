@@ -3,24 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thesis Model 01</title>
+    <title>Architecture Thesis Models</title>
     
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
     
     <style>
-        body { margin: 0; padding: 0; background-color: #ffffff; }
+        body { margin: 0; padding: 0; font-family: sans-serif; overflow: hidden; background-color: #ffffff; }
+        
+        /* The Sidebar Menu */
+        #sidebar {
+            position: absolute;
+            top: 0; left: -250px; /* Hidden off-screen by default */
+            width: 250px; height: 100vh;
+            background-color: #f4f4f4;
+            transition: left 0.3s ease;
+            z-index: 10;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+            padding-top: 60px;
+        }
+        #sidebar.open { left: 0; } /* Slides in when 'open' class is added */
+        
+        /* The Links in the Sidebar */
+        .model-link {
+            display: block; padding: 15px 20px;
+            color: #333; text-decoration: none;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+        .model-link:hover { background-color: #e0e0e0; }
+        
+        /* The Hamburger Button */
+        #menu-btn {
+            position: absolute;
+            top: 15px; left: 15px;
+            z-index: 20;
+            background: white; border: none;
+            font-size: 24px; cursor: pointer;
+            padding: 5px 10px; border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
         model-viewer { width: 100vw; height: 100vh; }
     </style>
 </head>
 <body>
 
-    <model-viewer 
-        src="LogPiece01.glb" 
-        camera-controls 
-        auto-rotate 
-        shadow-intensity="1"
-        ar>
-    </model-viewer>
+    <button id="menu-btn">☰</button>
 
+    <div id="sidebar">
+        <a class="model-link" onclick="loadModel('model-01')">Model 01: Massing</a>
+        <a class="model-link" onclick="loadModel('model-02')">Model 02: Facade Details</a>
+    </div>
+
+    <model-viewer id="viewer" src="model-01.glb" camera-controls auto-rotate shadow-intensity="1" ar></model-viewer>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const menuBtn = document.getElementById('menu-btn');
+        const viewer = document.getElementById('viewer');
+
+        // 1. Open/Close the sidebar when clicking the hamburger menu
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // 2. A dictionary matching your IDs to your actual file names
+        const modelFiles = {
+            'model-01': 'model-01.glb',
+            'model-02': 'model-02.glb'
+            // Keep adding to this list as you export new models!
+        };
+
+        // 3. The function that switches the model
+        function loadModel(modelId) {
+            if (modelFiles[modelId]) {
+                viewer.src = modelFiles[modelId]; // Switch the 3D file
+                window.location.hash = modelId;   // Update the URL for QR codes!
+                sidebar.classList.remove('open'); // Close the menu so they can see the model
+            }
+        }
+
+        // 4. The QR Code Magic: Check the URL when the page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.substring(1); // Read the part of the URL after the '#'
+            if (hash && modelFiles[hash]) {
+                loadModel(hash); // If a specific model is in the URL, load it immediately
+            }
+        });
+    </script>
 </body>
 </html>
