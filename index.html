@@ -113,7 +113,7 @@
                 loadModel(hash); // If a specific model is in the URL, load it immediately
             }
         });
-        
+
         // 5. The Dimension Auto-Calculator
         viewer.addEventListener('load', () => {
             // Get the center point and the size of the model's bounding box
@@ -123,17 +123,17 @@
             // X-Axis (Width) - Placed at the bottom-front edge
             const labelX = viewer.querySelector('[slot="hotspot-x"]');
             labelX.textContent = `W: ${(size.x).toFixed(2)}m`;
-            labelX.dataset.position = `${center.x} ${center.y - size.y / 2} ${center.z + size.z / 2}`;
+            labelX.setAttribute('data-position', `${center.x} ${center.y - size.y / 2} ${center.z + size.z / 2}`);
 
             // Y-Axis (Height) - Placed at the right-front edge
             const labelY = viewer.querySelector('[slot="hotspot-y"]');
             labelY.textContent = `H: ${(size.y).toFixed(2)}m`;
-            labelY.dataset.position = `${center.x + size.x / 2} ${center.y} ${center.z + size.z / 2}`;
+            labelY.setAttribute('data-position', `${center.x + size.x / 2} ${center.y} ${center.z + size.z / 2}`);
 
             // Z-Axis (Depth) - Placed at the bottom-right edge
             const labelZ = viewer.querySelector('[slot="hotspot-z"]');
             labelZ.textContent = `D: ${(size.z).toFixed(2)}m`;
-            labelZ.dataset.position = `${center.x + size.x / 2} ${center.y - size.y / 2} ${center.z}`;
+            labelZ.setAttribute('data-position', `${center.x + size.x / 2} ${center.y - size.y / 2} ${center.z}`);
         });
     </script>
 </body>
