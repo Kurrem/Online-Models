@@ -42,6 +42,20 @@
             padding: 5px 10px; border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
+
+        /* The Dimension Text Style */
+        .dim-label {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 4px 8px;
+            color: #333;
+            font-family: monospace, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            pointer-events: none; /* Stops the text from blocking the user's mouse when trying to spin the model */
+            transform: translate(-50%, -50%); /* Centers the text perfectly on its coordinate */
+        }
         
         model-viewer::part(default-ar-button) {
             bottom: 50px; /* Pushes the button 50 pixels up from the bottom */
@@ -59,15 +73,10 @@
         <a class="model-link" onclick="loadModel('pine06')">pine06</a>
     </div>
 
-    <model-viewer 
-        id="viewer" 
-        src="LogPiece01.glb" 
-        camera-controls 
-        auto-rotate 
-        shadow-intensity="1" 
-        ar 
-        ar-modes="webxr scene-viewer quick-look"
-        ar-scale="auto">
+    <model-viewer id="viewer" src="LogPiece01.glb" camera-controls auto-rotate shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto">
+        <button slot="hotspot-x" class="dim-label" data-position="0 0 0">Width</button>
+        <button slot="hotspot-y" class="dim-label" data-position="0 0 0">Height</button>
+        <button slot="hotspot-z" class="dim-label" data-position="0 0 0">Depth</button>
     </model-viewer>
 
     <script>
@@ -103,6 +112,28 @@
             if (hash && modelFiles[hash]) {
                 loadModel(hash); // If a specific model is in the URL, load it immediately
             }
+        });
+        
+        // 5. The Dimension Auto-Calculator
+        viewer.addEventListener('load', () => {
+            // Get the center point and the size of the model's bounding box
+            const center = viewer.getBoundingBoxCenter();
+            const size = viewer.getDimensions();
+
+            // X-Axis (Width) - Placed at the bottom-front edge
+            const labelX = viewer.querySelector('[slot="hotspot-x"]');
+            labelX.textContent = `W: ${(size.x).toFixed(2)}m`;
+            labelX.dataset.position = `${center.x} ${center.y - size.y / 2} ${center.z + size.z / 2}`;
+
+            // Y-Axis (Height) - Placed at the right-front edge
+            const labelY = viewer.querySelector('[slot="hotspot-y"]');
+            labelY.textContent = `H: ${(size.y).toFixed(2)}m`;
+            labelY.dataset.position = `${center.x + size.x / 2} ${center.y} ${center.z + size.z / 2}`;
+
+            // Z-Axis (Depth) - Placed at the bottom-right edge
+            const labelZ = viewer.querySelector('[slot="hotspot-z"]');
+            labelZ.textContent = `D: ${(size.z).toFixed(2)}m`;
+            labelZ.dataset.position = `${center.x + size.x / 2} ${center.y - size.y / 2} ${center.z}`;
         });
     </script>
 </body>
