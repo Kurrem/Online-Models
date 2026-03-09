@@ -114,26 +114,28 @@
             }
         });
 
-        // 5. The Dimension Auto-Calculator
+// 5. The Dimension Auto-Calculator
         viewer.addEventListener('load', () => {
-            // Get the center point and the size of the model's bounding box
             const center = viewer.getBoundingBoxCenter();
             const size = viewer.getDimensions();
+            
+            // The padding pushes the labels 15cm away from the actual 3D object
+            const pad = 0.15; 
 
-            // X-Axis (Width) - Placed at the bottom-front edge
+            // X-Axis (Width) -> Pushed BELOW the object (min Y)
             const labelX = viewer.querySelector('[slot="hotspot-x"]');
             labelX.textContent = `W: ${(size.x).toFixed(2)}m`;
-            labelX.setAttribute('data-position', `${center.x} ${center.y - size.y / 2} ${center.z + size.z / 2}`);
+            labelX.setAttribute('data-position', `${center.x} ${center.y - (size.y / 2) - pad} ${center.z + (size.z / 2) + pad}`);
 
-            // Y-Axis (Height) - Placed at the right-front edge
+            // Y-Axis (Height) -> Pushed to the RIGHT of the object (max X)
             const labelY = viewer.querySelector('[slot="hotspot-y"]');
             labelY.textContent = `H: ${(size.y).toFixed(2)}m`;
-            labelY.setAttribute('data-position', `${center.x + size.x / 2} ${center.y} ${center.z + size.z / 2}`);
+            labelY.setAttribute('data-position', `${center.x + (size.x / 2) + pad} ${center.y} ${center.z + (size.z / 2) + pad}`);
 
-            // Z-Axis (Depth) - Placed at the bottom-right edge
+            // Z-Axis (Depth) -> Pushed to the BOTTOM-RIGHT of the object
             const labelZ = viewer.querySelector('[slot="hotspot-z"]');
             labelZ.textContent = `D: ${(size.z).toFixed(2)}m`;
-            labelZ.setAttribute('data-position', `${center.x + size.x / 2} ${center.y - size.y / 2} ${center.z}`);
+            labelZ.setAttribute('data-position', `${center.x + (size.x / 2) + pad} ${center.y - (size.y / 2)} ${center.z - pad}`);
         });
     </script>
 </body>
