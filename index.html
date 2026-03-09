@@ -122,20 +122,30 @@
             // The padding pushes the labels 15cm away from the actual 3D object
             const pad = 0.15; 
 
-            // X-Axis (Width) -> Pushed BELOW the object (min Y)
-            const labelX = viewer.querySelector('[slot="hotspot-x"]');
-            labelX.textContent = `W: ${(size.x).toFixed(2)}m`;
-            labelX.setAttribute('data-position', `${center.x} ${center.y - (size.y / 2) - pad} ${center.z + (size.z / 2) + pad}`);
+            // 1. Update the Text inside the boxes
+            viewer.querySelector('[slot="hotspot-x"]').textContent = `W: ${(size.x).toFixed(2)}m`;
+            viewer.querySelector('[slot="hotspot-y"]').textContent = `H: ${(size.y).toFixed(2)}m`;
+            viewer.querySelector('[slot="hotspot-z"]').textContent = `D: ${(size.z).toFixed(2)}m`;
 
-            // Y-Axis (Height) -> Pushed to the RIGHT of the object (max X)
-            const labelY = viewer.querySelector('[slot="hotspot-y"]');
-            labelY.textContent = `H: ${(size.y).toFixed(2)}m`;
-            labelY.setAttribute('data-position', `${center.x + (size.x / 2) + pad} ${center.y} ${center.z + (size.z / 2) + pad}`);
+            // 2. Force the 3D Viewer to move the boxes to their new locations
+            
+            // Width -> Placed directly BELOW the object
+            viewer.updateHotspot({
+                name: 'hotspot-x',
+                position: `${center.x} ${center.y - (size.y / 2) - pad} ${center.z + (size.z / 2) + pad}`
+            });
 
-            // Z-Axis (Depth) -> Pushed to the BOTTOM-RIGHT of the object
-            const labelZ = viewer.querySelector('[slot="hotspot-z"]');
-            labelZ.textContent = `D: ${(size.z).toFixed(2)}m`;
-            labelZ.setAttribute('data-position', `${center.x + (size.x / 2) + pad} ${center.y - (size.y / 2)} ${center.z - pad}`);
+            // Height -> Placed to the RIGHT side of the object
+            viewer.updateHotspot({
+                name: 'hotspot-y',
+                position: `${center.x + (size.x / 2) + pad} ${center.y} ${center.z + (size.z / 2) + pad}`
+            });
+
+            // Depth -> Placed at the BOTTOM-RIGHT corner
+            viewer.updateHotspot({
+                name: 'hotspot-z',
+                position: `${center.x + (size.x / 2) + pad} ${center.y - (size.y / 2)} ${center.z - pad}`
+            });
         });
     </script>
 </body>
