@@ -149,6 +149,20 @@
                 position: `${center.x + (size.x / 2) + pad} ${center.y - (size.y / 2)} ${center.z - pad}`
             });
         });
+
+        // 6. The QR Code Direct Linker
+        window.addEventListener('DOMContentLoaded', () => {
+            // Check if there is a #hashtag in the web address (like #pine06)
+            if (window.location.hash) {
+                // Remove the '#' to get just the model ID (e.g., 'pine06')
+                const targetModel = window.location.hash.substring(1);
+                
+                // If that model exists in your list, load it immediately!
+                if (modelFiles[targetModel]) {
+                    loadModel(targetModel); 
+                }
+            }
+        });
     </script>
 </body>
 </html>
