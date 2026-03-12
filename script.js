@@ -29,9 +29,9 @@ menuBtn.addEventListener('click', () => {
                 process: 'Steamed 30 min | Dried 72h', 
                 status: 'Success'
             },
-            'pine06': {
+            'pine05': {
                 file: 'models/pine05.glb', // <-- Updated path!
-                name: 'Pine 06',
+                name: 'Pine 05',
                 id: 'Pending...', species: 'Pinus', dimensions: 'Pending...', process: 'Pending...', status: 'Pending'
             }
         };
