@@ -56,7 +56,7 @@ model-viewer { width: 100vw; height: 100dvh; display: block; }
 #spec-card {
     position: absolute;
     top: 20px;
-    left: 20px;
+    right: 20px;
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(4px); /* Gives it a modern frosted glass look */
     border: 1px solid #ddd;
