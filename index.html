@@ -61,6 +61,28 @@
             bottom: 50px; /* Pushes the button 50 pixels up from the bottom */
         }
         model-viewer { width: 100vw; height: 100dvh; display: block; }
+
+        /* The Floating Spec Card */
+        #spec-card {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px); /* Gives it a modern frosted glass look */
+            border: 1px solid #ddd;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-family: monospace, sans-serif;
+            pointer-events: none; /* Crucial: Lets the user click THROUGH the card to spin the model */
+            z-index: 10;
+            display: none; /* Hidden until a model is clicked */
+        }
+        
+        .spec-title { font-size: 18px; font-weight: bold; color: #111; margin-bottom: 8px; }
+        .spec-meta { font-size: 12px; color: #888; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+        .spec-detail { font-size: 14px; color: #333; margin-bottom: 4px; }
+        .spec-success { color: #28a745; font-weight: bold; } /* Green for success */
     </style>
 </head>
 <body>
@@ -78,91 +100,17 @@
         <button slot="hotspot-x" class="dim-label" data-position="0 0 0">Width</button>
         <button slot="hotspot-y" class="dim-label" data-position="0 0 0">Height</button>
         <button slot="hotspot-z" class="dim-label" data-position="0 0 0">Depth</button>
+
+        <div id="spec-card">
+            <div class="spec-title" id="card-name">Model Name</div>
+            <div class="spec-meta" id="card-id">ID: ---------</div>
+            <div class="spec-detail" id="card-species"><b>Species:</b> <span>-</span></div>
+            <div class="spec-detail" id="card-dims"><b>Stock Dim:</b> <span>-</span></div>
+            <div class="spec-detail" id="card-process"><b>Process:</b> <span>-</span></div>
+            <div class="spec-detail" id="card-status"><b>Result:</b> <span>-</span></div>
+        </div>
     </model-viewer>
 
-    <script>
-        const sidebar = document.getElementById('sidebar');
-        const menuBtn = document.getElementById('menu-btn');
-        const viewer = document.getElementById('viewer');
-
-        // 1. Open/Close the sidebar when clicking the hamburger menu
-        menuBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-        });
-
-        // 2. A dictionary matching your IDs to your actual file names
-        const modelFiles = {
-            'LogPiece01': 'LogPiece01.glb',
-            'birch03': 'birch03.glb',
-            'birch04': 'birch04.glb',
-            'pine06': 'pine05.glb'
-            // Keep adding to this list as you export new models!
-        };
-
-        // 3. The function that switches the model
-        function loadModel(modelId) {
-            if (modelFiles[modelId]) {
-                viewer.src = modelFiles[modelId]; // Switch the 3D file
-                window.location.hash = modelId;   // Update the URL for QR codes!
-                sidebar.classList.remove('open'); // Close the menu so they can see the model
-            }
-        }
-
-        // 4. The QR Code Magic: Check the URL when the page loads
-        window.addEventListener('DOMContentLoaded', () => {
-            const hash = window.location.hash.substring(1); // Read the part of the URL after the '#'
-            if (hash && modelFiles[hash]) {
-                loadModel(hash); // If a specific model is in the URL, load it immediately
-            }
-        });
-
-// 5. The Dimension Auto-Calculator
-        viewer.addEventListener('load', () => {
-            const center = viewer.getBoundingBoxCenter();
-            const size = viewer.getDimensions();
-            
-            // The padding pushes the labels 15cm away from the actual 3D object
-            const pad = 0.15; 
-
-            // 1. Update the Text inside the boxes
-            viewer.querySelector('[slot="hotspot-x"]').textContent = `W: ${(size.x).toFixed(2)}m`;
-            viewer.querySelector('[slot="hotspot-y"]').textContent = `H: ${(size.y).toFixed(2)}m`;
-            viewer.querySelector('[slot="hotspot-z"]').textContent = `D: ${(size.z).toFixed(2)}m`;
-
-            // 2. Force the 3D Viewer to move the boxes to their new locations
-            
-            // Width -> Placed directly BELOW the object
-            viewer.updateHotspot({
-                name: 'hotspot-x',
-                position: `${center.x} ${center.y - (size.y / 2) - pad} ${center.z + (size.z / 2) + pad}`
-            });
-
-            // Height -> Placed to the RIGHT side of the object
-            viewer.updateHotspot({
-                name: 'hotspot-y',
-                position: `${center.x + (size.x / 2) + pad} ${center.y} ${center.z + (size.z / 2) + pad}`
-            });
-
-            // Depth -> Placed at the BOTTOM-RIGHT corner
-            viewer.updateHotspot({
-                name: 'hotspot-z',
-                position: `${center.x + (size.x / 2) + pad} ${center.y - (size.y / 2)} ${center.z - pad}`
-            });
-        });
-
-        // 6. The QR Code Direct Linker
-        window.addEventListener('DOMContentLoaded', () => {
-            // Check if there is a #hashtag in the web address (like #pine06)
-            if (window.location.hash) {
-                // Remove the '#' to get just the model ID (e.g., 'pine06')
-                const targetModel = window.location.hash.substring(1);
-                
-                // If that model exists in your list, load it immediately!
-                if (modelFiles[targetModel]) {
-                    loadModel(targetModel); 
-                }
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
