@@ -9,32 +9,32 @@ menuBtn.addEventListener('click', () => {
 });
 
 // 2. The Upgraded Model Database (File + Catalogue Data)
-const modelData = {
-    'LogPiece01': {
-        file: 'LogPiece01.glb',
-        name: 'Log Piece 01',
-        id: 'Pending...', species: 'Unknown', dimensions: 'Pending...', process: 'Pending...', status: 'Pending'
-    },
-    'birch03': {
-        file: 'birch03.glb',
-        name: 'Birch 03',
-        id: 'Pending...', species: 'Betula', dimensions: 'Pending...', process: 'Pending...', status: 'Pending'
-    },
-    'birch04': {
-        file: 'birch04.glb',
-        name: 'Birch 04',
-        id: 'B_1000328_0306_01', 
-        species: 'Betula', 
-        dimensions: '1000 x 32 x 8 mm', 
-        process: 'Steamed 30 min | Dried 72h', 
-        status: 'Success'
-    },
-    'pine06': {
-        file: 'pine05.glb',
-        name: 'Pine 06',
-        id: 'Pending...', species: 'Pinus', dimensions: 'Pending...', process: 'Pending...', status: 'Pending'
-    }
-};
+        const modelData = {
+            'LogPiece01': {
+                file: 'models/LogPiece01.glb', // <-- Updated path!
+                name: 'Log Piece 01',
+                id: 'Pending...', species: 'Unknown', dimensions: 'Pending...', process: 'Pending...', status: 'Pending'
+            },
+            'birch03': {
+                file: 'models/birch03.glb', // <-- Updated path!
+                name: 'Birch 03',
+                id: 'Pending...', species: 'Betula', dimensions: 'Pending...', process: 'Pending...', status: 'Pending'
+            },
+            'birch04': {
+                file: 'models/birch04.glb', // <-- Updated path!
+                name: 'Birch 04',
+                id: 'B_1000328_0306_01', 
+                species: 'Betula', 
+                dimensions: '1000 x 32 x 8 mm', 
+                process: 'Steamed 30 min | Dried 72h', 
+                status: 'Success'
+            },
+            'pine06': {
+                file: 'models/pine05.glb', // <-- Updated path!
+                name: 'Pine 06',
+                id: 'Pending...', species: 'Pinus', dimensions: 'Pending...', process: 'Pending...', status: 'Pending'
+            }
+        };
 
 // 3. The Upgraded Load Function
 function loadModel(modelKey) {

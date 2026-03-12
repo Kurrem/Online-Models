@@ -7,83 +7,7 @@
     
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
     
-    <style>
-        body { margin: 0; padding: 0; font-family: sans-serif; overflow: hidden; background-color: #ffffff; }
-        
-        /* The Sidebar Menu */
-        #sidebar {
-            position: absolute;
-            top: 0; left: -250px; /* Hidden off-screen by default */
-            width: 250px; height: 100vh;
-            background-color: #f4f4f4;
-            transition: left 0.3s ease;
-            z-index: 10;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-            padding-top: 60px;
-        }
-        #sidebar.open { left: 0; } /* Slides in when 'open' class is added */
-        
-        /* The Links in the Sidebar */
-        .model-link {
-            display: block; padding: 15px 20px;
-            color: #333; text-decoration: none;
-            border-bottom: 1px solid #ddd;
-            cursor: pointer;
-        }
-        .model-link:hover { background-color: #e0e0e0; }
-        
-        /* The Hamburger Button */
-        #menu-btn {
-            position: absolute;
-            top: 15px; left: 15px;
-            z-index: 20;
-            background: white; border: none;
-            font-size: 24px; cursor: pointer;
-            padding: 5px 10px; border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        /* The Dimension Text Style */
-        .dim-label {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 4px 8px;
-            color: #333;
-            font-family: monospace, sans-serif;
-            font-size: 14px;
-            font-weight: bold;
-            pointer-events: none; /* Stops the text from blocking the user's mouse when trying to spin the model */
-            transform: translate(-50%, -50%); /* Centers the text perfectly on its coordinate */
-        }
-        
-        model-viewer::part(default-ar-button) {
-            bottom: 50px; /* Pushes the button 50 pixels up from the bottom */
-        }
-        model-viewer { width: 100vw; height: 100dvh; display: block; }
-
-        /* The Floating Spec Card */
-        #spec-card {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(4px); /* Gives it a modern frosted glass look */
-            border: 1px solid #ddd;
-            padding: 15px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            font-family: monospace, sans-serif;
-            pointer-events: none; /* Crucial: Lets the user click THROUGH the card to spin the model */
-            z-index: 10;
-            display: none; /* Hidden until a model is clicked */
-        }
-        
-        .spec-title { font-size: 18px; font-weight: bold; color: #111; margin-bottom: 8px; }
-        .spec-meta { font-size: 12px; color: #888; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
-        .spec-detail { font-size: 14px; color: #333; margin-bottom: 4px; }
-        .spec-success { color: #28a745; font-weight: bold; } /* Green for success */
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -96,7 +20,7 @@
         <a class="model-link" onclick="loadModel('pine05')">pine06</a>
     </div>
 
-    <model-viewer id="viewer" src="LogPiece01.glb" camera-controls auto-rotate shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto">
+    <model-viewer id="viewer" src="models/LogPiece01.glb" camera-controls auto-rotate shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto">
         <button slot="hotspot-x" class="dim-label" data-position="0 0 0">Width</button>
         <button slot="hotspot-y" class="dim-label" data-position="0 0 0">Height</button>
         <button slot="hotspot-z" class="dim-label" data-position="0 0 0">Depth</button>
