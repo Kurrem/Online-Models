@@ -32,7 +32,11 @@ menuBtn.addEventListener('click', () => {
             'pine05': {
                 file: 'models/pine05.glb', // <-- Updated path!
                 name: 'Pine 05',
-                id: 'Pending...', species: 'Pinus', dimensions: 'Pending...', process: 'Pending...', status: 'Pending'
+                id: 'Pending...', species: 'Pinus', dimensions: 'Pending...', process: 'Pending...', status: 'Pending',
+                notes: [
+                    { position: "0.05 0.2 -0.1", text: "Notice the localized tearing near this knot due to over-compression." },
+                    { position: "-0.02 -0.1 0.05", text: "Maximum curvature achieved cleanly without splintering." }
+                ]
             }
         };
 
@@ -61,6 +65,32 @@ function loadModel(modelKey) {
         // Show the card
         specCard.style.display = 'block';
     }
+    
+    // --- Handle Annotations ---
+                
+                // 1. Clear any old notes from the previous model
+                const existingNotes = viewer.querySelectorAll('.annotation-dot');
+                existingNotes.forEach(note => note.remove());
+
+                // 2. If the new model has notes, generate them!
+                if (data.notes) {
+                    data.notes.forEach((note, index) => {
+                        // Create the physical dot
+                        const dot = document.createElement('button');
+                        dot.className = 'annotation-dot';
+                        dot.slot = `hotspot-note-${index}`; // Give it a unique slot ID
+                        dot.dataset.position = note.position;
+
+                        // Create the text tooltip inside the dot
+                        const tooltip = document.createElement('div');
+                        tooltip.className = 'annotation-tooltip';
+                        tooltip.textContent = note.text;
+
+                        // Attach them to the 3D viewer
+                        dot.appendChild(tooltip);
+                        viewer.appendChild(dot);
+                    });
+                }
 }
 
 // 4. Cleaned Up QR Code Auto-Loader

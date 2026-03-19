@@ -69,6 +69,49 @@ model-viewer { width: 100vw; height: 100dvh; display: block; }
     display: none; /* Hidden until a model is clicked */
 }
 
+/* --- Interactive Annotations --- */
+        
+        /* The clickable dot on the 3D model */
+        .annotation-dot {
+            width: 16px;
+            height: 16px;
+            background-color: #28a745; /* A nice architectural green */
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* The hidden note box */
+        .annotation-tooltip {
+            visibility: hidden;
+            width: 180px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            color: #333;
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 10;
+            bottom: 150%; /* Floats it right above the dot */
+            left: 50%;
+            transform: translateX(-50%); /* Centers it perfectly */
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            font-size: 13px;
+            font-family: monospace, sans-serif;
+            border: 1px solid #ccc;
+            pointer-events: none; /* Prevents the tooltip from blocking mouse clicks */
+        }
+
+        /* The Magic: When you hover over the dot, show the tooltip! */
+        .annotation-dot:hover .annotation-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
 .spec-title { font-size: 18px; font-weight: bold; color: #111; margin-bottom: 8px; }
 .spec-meta { font-size: 12px; color: #888; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
 .spec-detail { font-size: 14px; color: #333; margin-bottom: 4px; }
