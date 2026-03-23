@@ -1,5 +1,5 @@
 # Adding a New Physical Model to the Digital Catalogue
-**Last Updated:** Phase 1 (Base Architecture)
+**Last Updated:** Phase 2 (Vite + React migration, GitHub Pages deploy)
 
 ## Step 1: Export the 3D Model (Rhino)
 1. Ensure the photogrammetry scan is scaled to real-world **meters** in Rhino.
@@ -10,40 +10,55 @@
 
 ## Step 2: Add it to the Web Folder (VS Code)
 1. Open the `Online Models` project in VS Code.
-2. Drag and drop the new `.glb` file directly into the **`models/`** folder.
+2. Drag and drop the new `.glb` file directly into the **`public/models/`** folder.
 
-## Step 3: Update the Database (`script.js`)
-1. Open `script.js`.
-2. Find the `modelData` dictionary. 
+## Step 3: Update the Database (`src/App.jsx`)
+1. Open `src/App.jsx`.
+2. Find the `modelData` array/object.
 3. Copy an existing block, paste it at the bottom, and fill in the details from the physical thesis catalogue. *(Don't forget the comma after the previous block!)*
 
 **Data Block Template:**
     'pine07': {
-        file: 'models/pine07.glb', 
+        file: 'models/pine07.glb',
         name: 'Pine 07',
-        id: 'P_1000400_0310_02', 
-        species: 'Pinus', 
-        dimensions: '1000 x 40 x 10 mm', 
-        process: 'Steamed 45 min | Dried 48h', 
+        id: 'P_1000400_0310_02',
+        species: 'Pinus',
+        dimensions: '1000 x 40 x 10 mm',
+        process: 'Steamed 45 min | Dried 48h',
         status: 'Failure - Snapped'
     }
 
-## Step 4: Add the Menu Button (`index.html`)
-1. Open `index.html`.
-2. Scroll to the `<div id="sidebar">` section.
-3. Add a new link using the exact short-code ID created in Step 3.
+## Step 4: Save and Preview Locally (Optional)
+Run the local dev server to check everything looks correct before publishing:
+```
+npm run dev
+```
+This opens the site at `http://localhost:5173`. Changes are hot-reloaded as you edit. **This does NOT update the live website.**
 
-**Menu Link Template:**
-    <a class="model-link" onclick="loadModel('pine07')">Pine 07</a>
-
-## Step 5: Sync to GitHub
+## Step 5: Save Your Work to Git (main branch)
 1. In VS Code, go to the Source Control tab.
 2. Type a commit message (e.g., "Added Pine 07 model").
-3. Click **Commit**, then click **Sync Changes**. 
+3. Click **Commit**, then click **Sync Changes**.
 
-## Step 6: Create the QR Code (For the Physical Book)
-1. Wait ~60 seconds for GitHub pages to update.
+> This saves your source code to the `main` branch. **The live GitHub Pages website is NOT updated yet.**
+
+## Step 6: Publish to the Live Website
+When you are ready to update the public website, run:
+```
+npm run deploy
+```
+This builds the site and pushes the compiled output to the `gh-pages` branch, which GitHub Pages serves publicly. Wait ~60 seconds for GitHub to finish deploying.
+
+> **Summary:**
+> | Action | Command |
+> |---|---|
+> | Preview locally | `npm run dev` |
+> | Save source code | `git push` (via VS Code Sync) |
+> | Update live website | `npm run deploy` |
+
+## Step 7: Create the QR Code (For the Physical Book)
+1. Wait ~60 seconds after running `npm run deploy` for GitHub Pages to update.
 2. Go to a static QR code generator.
 3. Type in the base website link, followed by a `#` and the short-code ID:
-   `https://[yourusername].github.io/Online%20Models/#pine07`
+   `https://[yourusername].github.io/Online-Models/#pine07`
 4. Download the QR code and drop it into the InDesign/Word document next to the physical log entry.
