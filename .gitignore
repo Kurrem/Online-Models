@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-electron/
+build/
+
+# Vite cache
+.vite/
+
+# Environment variables (keep secrets safe)
+.env
+.env.local
+.env.production
+
+# Mac junk
+.DS_Store
+
+# PC junk
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor folders
+.vscode/
+.idea/
