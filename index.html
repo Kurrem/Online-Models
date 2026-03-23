@@ -1,40 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Architecture Thesis Models</title>
-    
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
-    
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <button id="menu-btn">☰</button>
-
-    <div id="sidebar">
-        <a class="model-link" onclick="loadModel('LogPiece01')">LogPiece01</a>
-        <a class="model-link" onclick="loadModel('birch03')">birch03</a>
-        <a class="model-link" onclick="loadModel('birch04')">birch04</a>
-        <a class="model-link" onclick="loadModel('pine05')">pine05</a>
-    </div>
-
-    <model-viewer id="viewer" src="models/LogPiece01.glb" camera-controls auto-rotate shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto">
-        <button slot="hotspot-x" class="dim-label" data-position="0 0 0">Width</button>
-        <button slot="hotspot-y" class="dim-label" data-position="0 0 0">Height</button>
-        <button slot="hotspot-z" class="dim-label" data-position="0 0 0">Depth</button>
-
-        <div id="spec-card">
-            <div class="spec-title" id="card-name">Model Name</div>
-            <div class="spec-meta" id="card-id">ID: ---------</div>
-            <div class="spec-detail" id="card-species"><b>Species:</b> <span>-</span></div>
-            <div class="spec-detail" id="card-dims"><b>Stock Dim:</b> <span>-</span></div>
-            <div class="spec-detail" id="card-process"><b>Process:</b> <span>-</span></div>
-            <div class="spec-detail" id="card-status"><b>Result:</b> <span>-</span></div>
-        </div>
-    </model-viewer>
-
-    <script src="script.js"></script>
-</body>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
