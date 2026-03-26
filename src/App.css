@@ -3,34 +3,58 @@ body { margin: 0; padding: 0; font-family: sans-serif; overflow: hidden; backgro
 /* The Sidebar Menu */
 #sidebar {
     position: fixed;
-    top: 0; left: -250px;
-    width: 250px; height: 100vh;
-    background-color: #f4f4f4;
-    transition: left 0.3s ease;
+    top: 0; left: 0;
+    width: 200px; height: 100vh;
     z-index: 10;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.12);
 }
-#sidebar.open { left: 0; }
+
+#sidebar-header {
+    padding: 14px 16px;
+    font-family: monospace, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    color: #444;
+    background: rgba(235, 235, 235, 0.75);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    flex-shrink: 0;
+}
+
+#sidebar-list {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    cursor: grab;
+    user-select: none;
+    background: rgba(244, 244, 244, 0.2);
+    backdrop-filter: blur(6px);
+}
+#sidebar-list::-webkit-scrollbar { display: none; }
+#sidebar-list { scrollbar-width: none; }
 
 /* The Links in the Sidebar */
 .model-link {
-    display: block; padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
     color: #333; text-decoration: none;
-    border-bottom: 1px solid #ddd;
+    font-family: monospace, sans-serif;
+    font-size: 13px;
     cursor: pointer;
 }
-.model-link:hover { background-color: #e0e0e0; }
+.model-link:hover { background-color: rgba(0,0,0,0.07); }
 
-/* The Hamburger Button */
-#menu-btn {
-    position: fixed;
-    top: 15px; left: 15px;
-    z-index: 20;
-    background: white; border: none;
-    font-size: 24px; cursor: pointer;
-    padding: 5px 10px; border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+.model-thumb {
+    width: 56px;
+    height: 42px;
+    object-fit: cover;
+    border-radius: 3px;
+    flex-shrink: 0;
 }
 
 /* The Dimension Text Style */

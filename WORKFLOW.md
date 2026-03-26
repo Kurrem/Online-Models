@@ -12,6 +12,13 @@
 1. Open the `Online Models` project in VS Code.
 2. Drag and drop the new `.glb` file directly into the **`public/models/`** folder.
 
+## Step 2b: Export a Thumbnail Image
+The sidebar displays a thumbnail image for each model.
+1. In Rhino (or any 3D viewer), set up a clean view of the model.
+2. Export/render a screenshot at **160×120 px** (PNG or WebP).
+3. Name the file to match the model's short-code key exactly (e.g., `pine07.png`).
+4. Drop the file into **`public/thumbnails/`**.
+
 ## Step 3: Update the Database (`src/App.jsx`)
 1. Open `src/App.jsx`.
 2. Find the `modelData` array/object.
