@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { GridHelper } from 'three'
 
 const MODEL_DATA = {
   LogPiece01: {
@@ -222,6 +223,40 @@ export default function App() {
     function handleLoad() {
       const center = viewer.getBoundingBoxCenter()
       const size = viewer.getDimensions()
+
+      // Inject a Three.js GridHelper into the ModelScene.
+      // model-viewer offsets the model via target.position so its bounding-box
+      // centre lands at world (0,0,0). Grid lives in world space.
+      const sceneSymbol = Object.getOwnPropertySymbols(viewer)
+        .find(s => s.description === 'scene')
+      const modelScene = sceneSymbol ? viewer[sceneSymbol] : null
+      if (modelScene) {
+        // model-viewer sets camera.far = 2 * farRadius() based on the model bounding sphere.
+        // For small models this is only a few metres, clipping the grid almost immediately.
+        // Override farRadius() on this scene instance to enforce a large minimum.
+        const GRID_FAR_RADIUS = 200
+        if (!modelScene._gridFarPatched) {
+          const _origFarRadius = modelScene.farRadius.bind(modelScene)
+          modelScene.farRadius = () => Math.max(_origFarRadius(), GRID_FAR_RADIUS)
+          modelScene._gridFarPatched = true
+        }
+        // Force camera far plane update immediately — otherwise it only recalculates
+        // on the next orbit interaction, leaving the first load with the old small value.
+        modelScene.camera.far = GRID_FAR_RADIUS * 2
+        modelScene.camera.updateProjectionMatrix()
+
+        const old = modelScene.getObjectByName('floor-grid')
+        if (old) modelScene.remove(old)
+        const cellSize = Math.max(size.x, size.z) / 5  // ~5 cells per model length
+        const span = GRID_FAR_RADIUS * 4                // fill the full far distance
+        const divisions = Math.round(span / cellSize)
+        const grid = new GridHelper(span, divisions, 0xaaaaaa, 0xdddddd)
+        grid.name = 'floor-grid'
+        grid.position.y = -size.y / 2   // place at model base in world space
+        grid.raycast = () => {}          // prevent grid from intercepting orbit-control raycasts
+        modelScene.add(grid)
+      }
+
       const pad = 0.15
 
       viewer.querySelector('[slot="hotspot-x"]').textContent = `W: ${size.x.toFixed(2)}m`
@@ -273,7 +308,7 @@ export default function App() {
         src={currentSrc}
         camera-controls=""
         auto-rotate=""
-        shadow-intensity="1"
+        shadow-intensity="0"
         ar=""
         ar-modes="webxr scene-viewer quick-look"
         ar-scale="auto"

@@ -74,7 +74,7 @@ body { margin: 0; padding: 0; font-family: sans-serif; overflow: hidden; backgro
 model-viewer::part(default-ar-button) {
     bottom: 50px;
 }
-model-viewer { width: 100vw; height: 100dvh; display: block; }
+model-viewer { width: 100vw; height: 100dvh; display: block; --poster-color: transparent; background-color: #f8f8f8; }
 
 /* The Floating Spec Card */
 #spec-card {
