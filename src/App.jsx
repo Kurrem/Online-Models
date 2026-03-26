@@ -163,6 +163,8 @@ const TRIPLE_KEYS = [...MODEL_KEYS, ...MODEL_KEYS, ...MODEL_KEYS]
 export default function App() {
   const [activeModel, setActiveModel] = useState(null)
   const [currentSrc, setCurrentSrc] = useState('models/LogPiece01.glb')
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [specExpanded, setSpecExpanded] = useState(false)
   const viewerRef = useRef(null)
   const listRef = useRef(null)
   const drag = useRef({ active: false, startY: 0, scrollTop: 0, moved: false })
@@ -172,6 +174,7 @@ export default function App() {
     if (!data) return
     setCurrentSrc(data.file)
     setActiveModel(data)
+    setDrawerOpen(false)
     window.location.hash = modelKey
   }
 
@@ -283,8 +286,8 @@ export default function App() {
 
   return (
     <>
-      <div id="sidebar">
-        <div id="sidebar-header">Models</div>
+      <div id="sidebar" className={drawerOpen ? 'drawer-open' : ''}>
+        <div id="sidebar-header" onClick={() => setDrawerOpen(o => !o)}>Models</div>
         <div
           id="sidebar-list"
           ref={listRef}
@@ -319,18 +322,25 @@ export default function App() {
       </model-viewer>
 
       {activeModel && (
-        <div id="spec-card">
+        <div
+          id="spec-card"
+          className={specExpanded ? '' : 'spec-collapsed'}
+          onClick={() => setSpecExpanded(e => !e)}
+        >
           <div className="spec-title">{activeModel.name}</div>
           <div className="spec-meta">ID: {activeModel.id}</div>
-          <div className="spec-detail"><b>Species:</b> <span>{activeModel.species}</span></div>
-          <div className="spec-detail"><b>Stock Dim:</b> <span>{activeModel.dimensions}</span></div>
-          <div className="spec-detail"><b>Process:</b> <span>{activeModel.process}</span></div>
-          <div className="spec-detail">
-            <b>Result:</b>{' '}
-            <span className={activeModel.status === 'Success' ? 'spec-success' : ''}>
-              {activeModel.status}
-            </span>
+          <div className="spec-details">
+            <div className="spec-detail"><b>Species:</b> <span>{activeModel.species}</span></div>
+            <div className="spec-detail"><b>Stock Dim:</b> <span>{activeModel.dimensions}</span></div>
+            <div className="spec-detail"><b>Process:</b> <span>{activeModel.process}</span></div>
+            <div className="spec-detail">
+              <b>Result:</b>{' '}
+              <span className={activeModel.status === 'Success' ? 'spec-success' : ''}>
+                {activeModel.status}
+              </span>
+            </div>
           </div>
+          <div className="spec-chevron" />
         </div>
       )}
     </>
