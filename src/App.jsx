@@ -46,6 +46,15 @@ const MODEL_DATA = {
     process: 'Steamed 30 min | Dried 72h',
     status: 'Success',
   },
+  birch05: {
+    file: 'models/birch05.glb',
+    name: 'Birch 04',
+    id: 'B_1000328_0306_01',
+    species: 'Betula',
+    dimensions: '1000 x 32 x 8 mm',
+    process: 'Steamed 30 min | Dried 72h',
+    status: 'Success',
+  },
   pine05: {
     file: 'models/pine05.glb',
     name: 'Pine 05',
